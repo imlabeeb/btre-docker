@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                docker build --no-cache -t 'hello_django:${currentBuild.number}'
+                docker build --no-cache -t 'hello_django:${currentBuild.number}' .
             }
         }
         stage('tag') {
