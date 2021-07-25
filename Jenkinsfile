@@ -9,12 +9,12 @@ pipeline {
         }
         stage('tag') {
             steps {
-                docker tag hello_django:${currentBuild.number} nexus.dev.scrapehero.com/hello-django:${currentBuild.number}
+                docker tag 'hello_django:${currentBuild.number}' 'nexus.dev.scrapehero.com/hello-django:${currentBuild.number}'
             }
         }
         stage('push') {
             steps {
-                docker push nexus.dev.scrapehero.com/hello-django:${currentBuild.number}
+                docker push 'nexus.dev.scrapehero.com/hello-django:${currentBuild.number}'
             }
         }
     }
