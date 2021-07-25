@@ -1,17 +1,12 @@
 def registryCredentials1 = "nexus"
-// def registryCredentials2 = "docker"
 def protocol = "http://"
 def registryURL1 = "localhost:8082"
-// def registryURL2= "harbor.mycompany.xx.yy.com"
 
 pipeline {
     agent any
 
     parameters {
         //  string(name: 'sourceImageName', defaultValue: '', description: 'Source-Image-Name, name-schema is like user/foo, e.g. jenkins/jenkins')
-        //  string(name: 'sourceImageTag', defaultValue: '', description: 'Source-Image-Tag, e.g. lts')
-        //  string(name: 'targetImageName', defaultValue: '', description: 'Target-Image-Name, name-schema is like user/foo, e.g. jenkins/jenkins')
-        //  string(name: 'targetImageTag', defaultValue: '', description: 'Target-Image-Tag, e.g. lts')
          string(name: 'ImageName', defaultValue: 'btre')
     }
 
@@ -48,7 +43,7 @@ pipeline {
     stage('Push target-image to nexus') {
         steps {
             script {
-                //push target-image to registry 2
+                //push target-image to nexus
                 docker.withRegistry(protocol + registryURL1, registryCredentials1) {
                     // sh "docker push ${registryURL1}/${params.ImageName}:${params.ImageTag}"
                   dockerImage.push()
