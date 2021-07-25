@@ -1,5 +1,3 @@
-
-
 FROM python:3.8.0-alpine
 
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -27,6 +25,7 @@ RUN set -e; \
                 python3-dev \
                 postgresql-dev \
                 musl-dev \
+                jpeg-dev \
         ;
 
 COPY ./requirements.txt .
