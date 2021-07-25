@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/gustavoapolinario/node-todo-frontend.git'
+        git branch: 'main', credentialsId: 'github', url: 'https://github.com/imlabeeb/btre-docker.git'
       }
     }
     stage('Building image') {
