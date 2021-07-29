@@ -32,26 +32,26 @@ pipeline {
       }
     }
 
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build("${registryURL1}/${params.ImageName}" + ":$BUILD_NUMBER")
-        }
-      }
-    }
+    // stage('Building image') {
+    //   steps{
+    //     script {
+    //       dockerImage = docker.build("${registryURL1}/${params.ImageName}" + ":$BUILD_NUMBER")
+    //     }
+    //   }
+    // }
 
-    stage('Push target-image to nexus') {
-        steps {
-            script {
-                //push target-image to nexus
-                docker.withRegistry(protocol + registryURL1, registryCredentials1) {
-                    // sh "docker push ${registryURL1}/${params.ImageName}:${params.ImageTag}"
-                  dockerImage.push()
+    // stage('Push target-image to nexus') {
+    //     steps {
+    //         script {
+    //             //push target-image to nexus
+    //             docker.withRegistry(protocol + registryURL1, registryCredentials1) {
+    //                 // sh "docker push ${registryURL1}/${params.ImageName}:${params.ImageTag}"
+    //               dockerImage.push()
                     
-                }
-            }
-        }
-    }
+    //             }
+    //         }
+    //     }
+    // }
 
     stage('apply new image to kubernetes deployment') {
       steps{
@@ -59,10 +59,10 @@ pipeline {
       }
     } 
 
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi ${registryURL1}/${params.ImageName}:${BUILD_NUMBER}"
-      }
-    }    
+    // stage('Remove Unused docker image') {
+    //   steps{
+    //     sh "docker rmi ${registryURL1}/${params.ImageName}:${BUILD_NUMBER}"
+    //   }
+    // }    
   }
 }
