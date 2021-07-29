@@ -53,20 +53,20 @@ pipeline {
     //     }
     // }
 
-    // stage('apply new image to kubernetes deployment') {
-    //   steps{
-    //     sh "kubectl patch deployment btre-deployment -p '{\"spec\": {\"template\": {\"spec\":{\"containers\":[{\"name\": \"btre-container\", \"image\": \"${registryURL1}/${params.ImageName}:${BUILD_NUMBER}\"}]}}}}'"
-    //   }
-    // } 
-
-
     stage('apply new image to kubernetes deployment') {
       steps{
-        sh '''#!/bin/bash
-        kubectl patch deployment btre-deployment -p '{\"spec\": {\"template\": {\"spec\":{\"containers\":[{\"name\": \"btre-container\", \"image\": ${registryURL1}/${params.ImageName}:${BUILD_NUMBER}}]}}}}'
-        '''
+        sh "kubectl patch deployment btre-deployment -p '{\"spec\": {\"template\": {\"spec\":{\"containers\":[{\"name\": \"btre-container\", \"image\": \"${registryURL1}/${params.ImageName}:${BUILD_NUMBER}\"}]}}}}'"
       }
     } 
+
+
+    // stage('apply new image to kubernetes deployment') {
+    //   steps{
+    //     sh '''#!/bin/bash
+    //     kubectl patch deployment btre-deployment -p '{\"spec\": {\"template\": {\"spec\":{\"containers\":[{\"name\": \"btre-container\", \"image\": \${registryURL1}\/\${params.ImageName}\:\${BUILD_NUMBER}}]}}}}'
+    //     '''
+    //   }
+    // } 
 
     // stage('Remove Unused docker image') {
     //   steps{
