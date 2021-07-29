@@ -1,6 +1,6 @@
 def registryCredentials1 = "nexus"
 def protocol = "http://"
-def registryURL1 = "localhost:8082"
+def registryURL1 = "192.168.1.8:8082"
 
 pipeline {
     agent any
@@ -52,6 +52,13 @@ pipeline {
             }
         }
     }
+
+    stage('apply new image to kubernetes deployment') {
+      steps{
+        sh "kubectl patch deployment btre-deployment -p $(cat patch-file.yaml)"
+      }
+    } 
+
     stage('Remove Unused docker image') {
       steps{
         sh "docker rmi ${registryURL1}/${params.ImageName}:${BUILD_NUMBER}"
