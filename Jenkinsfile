@@ -55,7 +55,7 @@ pipeline {
 
     stage('apply new image to kubernetes deployment') {
       steps{
-        sh "kubectl patch deployment btre-deployment -p $'(cat patch-file.yaml)'"
+        sh "kubectl patch deployment btre-deployment -p \$(cat patch-file.yaml)"
       }
     } 
 
