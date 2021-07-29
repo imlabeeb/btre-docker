@@ -11,13 +11,13 @@ pipeline {
 
     stages {
 
-    stage('Cloning Git') {
+    stage('Cloning the project from Github') {
       steps {
         git branch: 'main', credentialsId: 'github', url: 'https://github.com/imlabeeb/btre-docker.git'
       }
     }
 
-    stage('Building image') {
+    stage('Building docker image') {
       steps{
         script {
           dockerImage = docker.build("${registryURL1}/${params.ImageName}" + ":$BUILD_NUMBER")
@@ -25,7 +25,7 @@ pipeline {
       }
     }
 
-    stage('Push target-image to nexus') {
+    stage('Push docker image to nexus') {
         steps {
             script {
                 docker.withRegistry(protocol + registryURL1, registryCredentials1) {
@@ -36,13 +36,13 @@ pipeline {
         }
     }
 
-    stage('apply new image to kubernetes deployment') {
+    stage('Patch new image to kubernetes deployment') {
       steps{
         sh "kubectl patch deployment btre-deployment -p '{\"spec\": {\"template\": {\"spec\":{\"containers\":[{\"name\": \"btre-container\", \"image\": \"${registryURL1}/${params.ImageName}:${BUILD_NUMBER}\"}]}}}}'"
       }
     } 
 
-    stage('Remove Unused docker image') {
+    stage('Remove Unused docker image in jenkins server') {
       steps{
         sh "docker rmi ${registryURL1}/${params.ImageName}:${BUILD_NUMBER}"
       }
